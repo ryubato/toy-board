@@ -1,6 +1,8 @@
 package me.ryubato.domain;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -14,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Board {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "board_id")
     private Long id;
 
@@ -25,8 +27,10 @@ public class Board {
     private String writer;
 
     @Column(updatable = false)
+    @CreationTimestamp
     private LocalDateTime createdDate;
 
+    @UpdateTimestamp
     private LocalDateTime modifiedDate;
 
     @OneToMany(mappedBy = "board")

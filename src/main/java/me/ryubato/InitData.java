@@ -5,11 +5,13 @@ import me.ryubato.domain.Board;
 import me.ryubato.domain.BoardRepository;
 import me.ryubato.domain.Comment;
 import me.ryubato.domain.CommentRepository;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
 @Component
+@ConditionalOnProperty(name = "init-data", havingValue = "true", matchIfMissing = true)
 @RequiredArgsConstructor
 public class InitData {
 

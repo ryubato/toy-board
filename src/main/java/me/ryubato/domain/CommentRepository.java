@@ -12,4 +12,6 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     @Query(value = "select * from comments c where c.parent_comment_id = ?1", nativeQuery = true)
     List<Comment> findAllByParentNative(Long id);
+
+
 }

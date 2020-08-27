@@ -33,7 +33,7 @@ public class Board {
     @UpdateTimestamp
     private LocalDateTime modifiedDate;
 
-    @OneToMany(mappedBy = "board")
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
 
     @Builder

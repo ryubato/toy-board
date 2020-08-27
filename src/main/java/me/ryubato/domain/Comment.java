@@ -1,13 +1,14 @@
 package me.ryubato.domain;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static javax.persistence.FetchType.LAZY;
 
@@ -25,6 +26,9 @@ public class Comment {
 
     private String writer;
 
+    @CreationTimestamp
+    private LocalDateTime createdDate;
+
     @UpdateTimestamp
     private LocalDateTime modifiedDate;
 
@@ -32,8 +36,12 @@ public class Comment {
     @JoinColumn(name = "board_id")
     private Board board;
 
-    @OneToOne(fetch = LAZY)
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "PARENT_COMMENT_ID")
     private Comment parent;
+
+    @OneToMany(mappedBy = "parent")
+    private List<Comment> child = new ArrayList<>();
 
     @Builder
     public Comment(Long id, String content, String writer, LocalDateTime modifiedDate, Board board, Comment parent) {

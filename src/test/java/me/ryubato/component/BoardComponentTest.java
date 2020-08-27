@@ -61,12 +61,12 @@ public class BoardComponentTest {
         String baseUrl = "http://localhost:" + port + "/api/v1/boards";
 
         //when
-        ResponseEntity<List<BoardListResponseDto>> responseEntity = restTemplate.exchange(baseUrl, GET, null, new ParameterizedTypeReference<List<BoardListResponseDto>>() {
+        ResponseEntity<List<BoardListResponseDto>> responseEntity =
+                restTemplate.exchange(baseUrl, GET, null, new ParameterizedTypeReference<List<BoardListResponseDto>>() {
         });
 
         //then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-
 
     }
 }

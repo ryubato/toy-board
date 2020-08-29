@@ -1,13 +1,16 @@
 package me.ryubato.component;
 
+import me.ryubato.web.BoardApiController;
 import me.ryubato.web.BoardListResponseDto;
 import me.ryubato.web.BoardSaveRequestDto;
+import me.ryubato.web.PagedBoardListDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.data.domain.Page;
 import org.springframework.http.*;
 
 import java.util.List;
@@ -18,7 +21,7 @@ import static org.springframework.http.HttpMethod.GET;
 
 @SpringBootTest(
         webEnvironment = RANDOM_PORT,
-        properties = {"init-data=false"}
+        properties = {"init-data=true"}
 )
 public class BoardComponentTest {
 
@@ -56,17 +59,25 @@ public class BoardComponentTest {
 
     @Test
     void 게시글_목록조회_v1() {
-
         //given
         String baseUrl = "http://localhost:" + port + "/api/v1/boards";
-
         //when
         ResponseEntity<List<BoardListResponseDto>> responseEntity =
                 restTemplate.exchange(baseUrl, GET, null, new ParameterizedTypeReference<List<BoardListResponseDto>>() {
-        });
-
+                });
         //then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+    }
 
+    @Test
+    void 게시글_목록조회_v2_페이징() {
+        //given
+        String baseUrl = "http://localhost:" + port + "/api/v2/boards?page=1&size=1";
+        //when
+        ResponseEntity<PagedBoardListDto> responseEntity =
+                restTemplate.exchange(baseUrl, GET, null, new ParameterizedTypeReference<PagedBoardListDto>() {
+        });
+        //then
+        System.out.println(responseEntity.getBody());
     }
 }

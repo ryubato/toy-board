@@ -24,6 +24,7 @@ public class Board {
 
     private String content;
 
+    @Column(nullable = false, updatable = false)
     private String writer;
 
     @Column(updatable = false)
@@ -44,5 +45,10 @@ public class Board {
         this.writer = writer;
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
+    }
+
+    public void update(String title, String content) {
+        this.title = title;
+        this.content = content;
     }
 }

@@ -1,17 +1,18 @@
 package me.ryubato.component;
 
-import me.ryubato.web.BoardApiController;
 import me.ryubato.web.BoardListResponseDto;
 import me.ryubato.web.BoardSaveRequestDto;
-import me.ryubato.web.PagedBoardListDto;
+import me.ryubato.web.RestResponsePage;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.data.domain.Page;
 import org.springframework.http.*;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ import static org.springframework.http.HttpMethod.GET;
 
 @SpringBootTest(
         webEnvironment = RANDOM_PORT,
-        properties = {"init-data=true"}
+        properties = {"init-data=false"}
 )
 public class BoardComponentTest {
 
@@ -73,11 +74,38 @@ public class BoardComponentTest {
     void 게시글_목록조회_v2_페이징() {
         //given
         String baseUrl = "http://localhost:" + port + "/api/v2/boards?page=1&size=1";
+
+        ParameterizedTypeReference<RestResponsePage<BoardListResponseDto>> type = new ParameterizedTypeReference<RestResponsePage<BoardListResponseDto>>() {};
+
         //when
-        ResponseEntity<PagedBoardListDto> responseEntity =
-                restTemplate.exchange(baseUrl, GET, null, new ParameterizedTypeReference<PagedBoardListDto>() {
-        });
+        ResponseEntity<RestResponsePage<BoardListResponseDto>> responseEntity =
+                restTemplate.exchange(baseUrl, GET, null, type);
+
         //then
-        System.out.println(responseEntity.getBody());
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        System.out.println(responseEntity.getBody().getContent());
+    }
+
+    @Test
+    void 게시글_목록조회_v3_페이징_CustomRestResponsePage() {
+        //given
+        String baseUrl = "http://localhost:" + port + "/api/v3/boards";
+
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("page", "1");
+        params.add("size", "1");
+
+        String uriString = UriComponentsBuilder.fromUriString(baseUrl)
+                .queryParams(params).toUriString();
+
+        ParameterizedTypeReference<RestResponsePage<BoardListResponseDto>> type = new ParameterizedTypeReference<RestResponsePage<BoardListResponseDto>>() {};
+
+        //when
+        ResponseEntity<RestResponsePage<BoardListResponseDto>> responseEntity =
+                restTemplate.exchange(uriString, GET, null, type);
+
+        //then
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        System.out.println(responseEntity.getBody().getContent());
     }
 }

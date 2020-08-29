@@ -1,14 +1,10 @@
 package me.ryubato.web;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.RequiredArgsConstructor;
 import me.ryubato.domain.Board;
 import me.ryubato.domain.BoardRepository;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -45,18 +41,17 @@ public class BoardApiController {
     }
 
     @GetMapping(value = "/api/v2/boards", params = {"page", "size"})
-    public PagedBoardListDto findAllWithPaging(
+    public Page<BoardListResponseDto> findAllWithPagingDefaultType(
             @RequestParam("page") int page,
             @RequestParam("size") int size) {
-        PageRequest pageable = PageRequest.of(page, size);
+        return boardRepository.findAll(PageRequest.of(page, size)).map(BoardListResponseDto::new);
+    }
 
-        Page<BoardListResponseDto> responseDtoPage = boardRepository.findAll(pageable).map(BoardListResponseDto::new);
-
-        return new PagedBoardListDto(
-                responseDtoPage.getContent(),
-                responseDtoPage.getPageable().getPageNumber(),
-                responseDtoPage.getPageable().getPageSize(),
-                responseDtoPage.getTotalElements());
-
+    @GetMapping(value = "/api/v3/boards", params = {"page", "size"})
+    public CustomRestResponsePage<BoardListResponseDto> findAllWithPagingTypeCustomRestResponsePage(
+            @RequestParam("page") int page,
+            @RequestParam("size") int size) {
+        Page<BoardListResponseDto> response = boardRepository.findAll(PageRequest.of(page, size)).map(BoardListResponseDto::new);
+        return new CustomRestResponsePage<BoardListResponseDto>(response.getContent(), response.getNumber(), response.getSize(), response.getTotalElements());
     }
 }

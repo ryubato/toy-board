@@ -17,8 +17,8 @@ public class BoardApiController {
     private final BoardRepository boardRepository;
 
     @PostMapping("/api/v1/boards")
-    public Long save(@RequestBody BoardSaveRequestDto boardSaveRequestDto) {
-        Board board = boardSaveRequestDto.toEntity();
+    public Long save(@RequestBody BoardForm boardForm) {  // TODO @Valid 적용
+        Board board = boardForm.toEntity();
         return boardRepository.save(board).getId();
     }
 
@@ -29,29 +29,35 @@ public class BoardApiController {
     }
 
     @PutMapping("/api/v1/boards/{id}")
-    public void update(@PathVariable("id") Long id, @RequestBody BoardSaveRequestDto boardSaveRequestDto) {
+    public void update(@PathVariable("id") Long id, @RequestBody BoardForm boardForm) {
         Board board = boardRepository.findById(id).orElseThrow(IllegalArgumentException::new);
-        board.update(boardSaveRequestDto.getTitle(), boardSaveRequestDto.getContent());
+        board.updateBoard(boardForm.getTitle(), boardForm.getContent());
+    }
+
+    @GetMapping("/api/v1/boards/{id}")
+    public BoardDto findById(@PathVariable Long id) {
+        Board board = boardRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+        return new BoardDto(board);
     }
 
     @GetMapping("/api/v1/boards")
-    public List<BoardListResponseDto> findAll() {
+    public List<BoardListDto> findAll() {
         return boardRepository.findAll().stream()
-                .map(BoardListResponseDto::new).collect(Collectors.toList());
+                .map(BoardListDto::new).collect(Collectors.toList());
     }
 
     @GetMapping(value = "/api/v2/boards", params = {"page", "size"})
-    public Page<BoardListResponseDto> findAllWithPagingDefaultType(
+    public Page<BoardListDto> findAllWithPagingDefaultType(
             @RequestParam("page") int page,
             @RequestParam("size") int size) {
-        return boardRepository.findAll(PageRequest.of(page, size)).map(BoardListResponseDto::new);
+        return boardRepository.findAll(PageRequest.of(page, size)).map(BoardListDto::new);
     }
 
     @GetMapping(value = "/api/v3/boards", params = {"page", "size"})
-    public CustomRestResponsePage<BoardListResponseDto> findAllWithPagingTypeCustomRestResponsePage(
+    public CustomRestResponsePage<BoardListDto> findAllWithPagingTypeCustomRestResponsePage(
             @RequestParam("page") int page,
             @RequestParam("size") int size) {
-        Page<BoardListResponseDto> response = boardRepository.findAll(PageRequest.of(page, size)).map(BoardListResponseDto::new);
-        return new CustomRestResponsePage<BoardListResponseDto>(response.getContent(), response.getNumber(), response.getSize(), response.getTotalElements());
+        Page<BoardListDto> response = boardRepository.findAll(PageRequest.of(page, size)).map(BoardListDto::new);
+        return new CustomRestResponsePage<BoardListDto>(response.getContent(), response.getNumber(), response.getSize(), response.getTotalElements());
     }
 }

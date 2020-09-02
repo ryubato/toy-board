@@ -1,20 +1,30 @@
 package me.ryubato.web;
 
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import me.ryubato.domain.Board;
+import org.hibernate.validator.constraints.Length;
 
-@Getter
+import javax.validation.constraints.NotBlank;
+
+@Data
 @NoArgsConstructor
-public class BoardSaveRequestDto {
+public class BoardForm {
 
+    @NotBlank
+    @Length(max = 20)
     private String title;
+
+    @NotBlank
     private String content;
+
+    @NotBlank
+    @Length(max = 20)
     private String writer;
 
     @Builder
-    public BoardSaveRequestDto(String title, String content, String writer) {
+    public BoardForm(String title, String content, String writer) {
         this.title = title;
         this.content = content;
         this.writer = writer;

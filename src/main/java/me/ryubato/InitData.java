@@ -38,7 +38,6 @@ public class InitData {
                 commentRepository.save(comment);
             }
         }
-
     }
 
     private Board getBoard() {

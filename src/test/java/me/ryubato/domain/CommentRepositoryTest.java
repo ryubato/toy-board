@@ -15,9 +15,9 @@ class CommentRepositoryTest {
     @Test
     void findAll() {
 
-        commentRepository.findAllByParentNoNative(Comment.builder().id(1L).build());
+        commentRepository.findAllByParent(Comment.builder().id(1L).build());
 
-        commentRepository.findAllByParentNative(1L);
+        commentRepository.findAllByParentUsingNativeQuery(1L);
     }
 
     @Test

@@ -6,6 +6,8 @@ import me.ryubato.domain.Comment;
 import me.ryubato.domain.Comment.CommentBuilder;
 import me.ryubato.web.BoardForm;
 import me.ryubato.web.BoardForm.BoardFormBuilder;
+import me.ryubato.web.CommentForm;
+import me.ryubato.web.CommentForm.CommentFormBuilder;
 
 public class Fixtures {
 
@@ -29,5 +31,11 @@ public class Fixtures {
                 .title("제목")
                 .content("내용")
                 .writer("관리자");
+    }
+
+    public static CommentFormBuilder aCommentForm() {
+        return CommentForm.builder()
+                .content("감사합니다.")
+                .writer("손님");
     }
 }

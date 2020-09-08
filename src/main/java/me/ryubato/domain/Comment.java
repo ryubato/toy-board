@@ -46,13 +46,14 @@ public class Comment {
     private List<Comment> child = new ArrayList<>();
 
     @Builder
-    public Comment(Long id, String content, String writer, LocalDateTime modifiedDate, Board board, Comment parent) {
+    public Comment(Long id, String content, String writer, LocalDateTime createdDate, LocalDateTime modifiedDate, Board board, Comment parent, List<Comment> child) {
         this.id = id;
         this.content = content;
         this.writer = writer;
+        this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
         this.board = board;
         this.parent = parent;
+        this.child = child;
     }
-
 }

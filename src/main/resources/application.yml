@@ -10,6 +10,10 @@ spring:
       hibernate:
         format_sql: true
 
+  thymeleaf:
+    mode: HTML
+    cache: false
+
 logging:
   level:
     web: debug

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Board</title>
+</head>
+<body>
+<h1>게시판</h1>
+<div>
+    <table th:if="${boards.size() > 0}">
+        <thead>
+        <tr>
+            <th>No</th>
+            <th>title</th>
+            <th>writer</th>
+            <th>modifiedDate</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="board: ${boards}">
+            <td th:text="${board.id}"></td>
+            <td th:text="${board.title}"></td>
+            <td th:text="${board.writer}"></td>
+            <td th:text="${board.modifiedDate}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

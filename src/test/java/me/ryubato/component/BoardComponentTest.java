@@ -8,7 +8,6 @@ import me.ryubato.web.BoardListDto;
 import me.ryubato.web.RestResponsePage;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
@@ -72,9 +71,7 @@ public class BoardComponentTest {
         restTemplate.delete(baseUrl);
 
         //then
-        assertThatThrownBy(() -> {
-            boardRepository.findById(board.getId()); })
-                .isInstanceOf(IllegalArgumentException.class);
+        assertThat(boardRepository.findById(board.getId())).isEmpty();
     }
 
     @Test

@@ -4,12 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="/js/bootstrap.min.js"></script>
+
     <title>Board</title>
 </head>
 <body>
 <h1>게시판</h1>
-<div>
-    <table th:if="${boards.size() > 0}">
+<p>
+<div class="container">
+    <table class="table table-horizontal table-bordered" th:if="${boards.size() > 0}">
         <thead>
         <tr>
             <th>No</th>
@@ -28,5 +33,6 @@
         </tbody>
     </table>
 </div>
+</p>
 </body>
 </html>

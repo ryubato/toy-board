@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,29 +11,33 @@
 
     <title>Board</title>
 </head>
+
 <body>
-<h1>게시판</h1>
-<p>
-<div class="container">
-    <table class="table table-horizontal table-bordered" th:if="${boards.size() > 0}">
-        <thead>
-        <tr>
-            <th>No</th>
-            <th>title</th>
-            <th>writer</th>
-            <th>modifiedDate</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="board: ${boards}">
-            <td th:text="${board.id}"></td>
-            <td th:text="${board.title}"></td>
-            <td th:text="${board.writer}"></td>
-            <td th:text="${board.modifiedDate}"></td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-</p>
+    <div>
+        <h1>게시판</h1>
+        <table class="table table-horizontal table-bordered" th:if="${boards.size() > 0}">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>title</th>
+                    <th>writer</th>
+                    <th>modifiedDate</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="board: ${boards}">
+                    <td th:text="${board.id}"></td>
+                    <td>
+                        <a href="detail.html" th:href="@{'/api/v1/boards/' + ${board.id}}" th:text="${board.title}"></a>
+                    </td>
+                    <td th:text="${board.writer}"></td>
+                    <td>
+                        <span class="date-weekday-time" th:text="${board.modifiedDate}"></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </body>
+
 </html>

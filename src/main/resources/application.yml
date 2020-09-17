@@ -1,13 +1,18 @@
 spring:
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:testdb
+    url: jdbc:h2:mem:testdb;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     username: sa
     password:
   jpa:
 #    show-sql: true
+    hibernate:
+      ddl-auto: 'create-drop'
+      naming:
+        physical-strategy: org.springframework.boot.orm.jpa.hiberante.SpringPhysicalNamingStrategy
     properties:
       hibernate:
+        dialect: org.hibernate.dialect.MySQL57Dialect
         format_sql: true
 
   thymeleaf:
@@ -17,4 +22,4 @@ spring:
 logging:
   level:
     web: debug
-    sql: trace
+    sql: trace|

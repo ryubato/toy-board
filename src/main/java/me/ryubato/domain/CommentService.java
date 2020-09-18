@@ -19,6 +19,7 @@ public class CommentService {
         Board board = boardRepository.findById(boardId).orElseThrow(IllegalArgumentException::new);
 
         Comment parentComment = null;
+
         if (parentCommentId != null) {
             parentComment = commentRepository.findById(parentCommentId).orElseThrow(IllegalArgumentException::new);
         }

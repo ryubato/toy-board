@@ -4,11 +4,8 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,16 +25,6 @@ public class Comment {
 
     private String writer;
 
-    @CreationTimestamp
-    private LocalDateTime createdDate;
-
-    @UpdateTimestamp
-    private LocalDateTime modifiedDate;
-
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "board_id")
-    private Board board;
-
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "PARENT_COMMENT_ID")
     private Comment parent;
@@ -46,14 +33,19 @@ public class Comment {
     private List<Comment> child = new ArrayList<>();
 
     @Builder
-    public Comment(Long id, String content, String writer, LocalDateTime createdDate, LocalDateTime modifiedDate, Board board, Comment parent, List<Comment> child) {
+    public Comment(Long id, String content, String writer, Comment parent, List<Comment> child) {
         this.id = id;
         this.content = content;
         this.writer = writer;
-        this.createdDate = createdDate;
-        this.modifiedDate = modifiedDate;
-        this.board = board;
         this.parent = parent;
         this.child = child;
+    }
+
+    public static Comment createComment(String content, String writer, Comment parent) {
+        return Comment.builder()
+                .content(content)
+                .writer(writer)
+                .parent(parent)
+                .build();
     }
 }

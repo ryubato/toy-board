@@ -31,6 +31,6 @@ public class BoardListDto {
         this.id = board.getId();
         this.title = board.getTitle();
         this.writer = board.getWriter();
-        this.modifiedDate = board.getModifiedDate();
+        this.modifiedDate = board.getLastModifiedDate();
     }
 }

@@ -1,6 +1,10 @@
-package me.ryubato.domain;
+package me.ryubato.service;
 
 import lombok.RequiredArgsConstructor;
+import me.ryubato.domain.Board;
+import me.ryubato.domain.BoardRepository;
+import me.ryubato.domain.Comment;
+import me.ryubato.domain.CommentRepository;
 import me.ryubato.web.CommentForm;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +31,6 @@ public class CommentService {
         Comment comment = Comment.builder()
                 .content(commentForm.getContent())
                 .writer(commentForm.getWriter())
-                .board(board)
                 .parent(parentComment)
                 .build();
 

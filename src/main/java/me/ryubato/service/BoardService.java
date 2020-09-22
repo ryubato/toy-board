@@ -21,7 +21,8 @@ public class BoardService {
     private final BoardRepository boardRepository;
 
     public Long save(BoardForm boardForm) {
-        return boardRepository.save(boardForm.toEntity()).getId();
+        Board board = Board.createBoard(boardForm.getTitle(), boardForm.getContent(), boardForm.getWriter());
+        return boardRepository.save(board).getId();
     }
 
     public void delete(Long boardId) {

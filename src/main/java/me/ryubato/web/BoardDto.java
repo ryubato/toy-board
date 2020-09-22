@@ -38,6 +38,6 @@ public class BoardDto {
         this.content = board.getContent();
         this.writer = board.getWriter();
         this.createdDate = board.getCreatedDate();
-        this.modifiedDate = board.getModifiedDate();
+        this.modifiedDate = board.getLastModifiedDate();
     }
 }

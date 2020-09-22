@@ -1,6 +1,7 @@
 package me.ryubato.domain;
 
 import me.ryubato.Fixtures;
+import me.ryubato.service.CommentService;
 import me.ryubato.web.CommentForm;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;

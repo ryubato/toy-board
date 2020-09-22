@@ -3,7 +3,6 @@ package me.ryubato.web;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import me.ryubato.domain.Board;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
@@ -28,13 +27,5 @@ public class BoardForm {
         this.title = title;
         this.content = content;
         this.writer = writer;
-    }
-
-    public Board toEntity() {
-        return Board.builder()
-                .title(title)
-                .content(content)
-                .writer(writer)
-                .build();
     }
 }

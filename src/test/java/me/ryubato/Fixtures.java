@@ -13,7 +13,6 @@ public class Fixtures {
 
     public static BoardBuilder aBoard() {
         return Board.builder()
-                .id(1L)
                 .title("제목")
                 .content("내용")
                 .writer("관리자");
@@ -21,7 +20,6 @@ public class Fixtures {
 
     public static CommentBuilder aComment() {
         return Comment.builder()
-                .id(1L)
                 .content("감사합니다.")
                 .writer("손님");
     }

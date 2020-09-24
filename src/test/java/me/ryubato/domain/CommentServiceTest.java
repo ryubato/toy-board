@@ -27,7 +27,7 @@ class CommentServiceTest {
         Board board = Fixtures.aBoard().build();
         boardRepository.save(board);
 
-        Comment parentComment = Fixtures.aComment().board(board).build();
+        Comment parentComment = Fixtures.aComment().build();
         commentRepository.save(parentComment);
 
         CommentForm commentForm = Fixtures.aCommentForm().build();

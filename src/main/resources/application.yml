@@ -1,25 +1,61 @@
 spring:
+  profiles:
+    active: local
+  thymeleaf:
+    mode: HTML
+    cache: false
+
+---
+
+spring:
+  profiles: local
   datasource:
     driver-class-name: org.h2.Driver
     url: jdbc:h2:mem:testdb;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     username: sa
     password:
   jpa:
-#    show-sql: true
+    #    show-sql: true
+
     hibernate:
-      ddl-auto: 'create-drop'
-#      naming:
-#        physical-strategy: org.springframework.boot.orm.jpa.hiberante.SpringPhysicalNamingStrategy
+      ddl-auto: update
+    #      naming:
+    #        physical-strategy: org.springframework.boot.orm.jpa.hiberante.SpringPhysicalNamingStrategy
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL57Dialect
         format_sql: true
 
-  thymeleaf:
-    mode: HTML
-    cache: false
-
 logging:
   level:
     web: debug
     sql: trace
+
+---
+
+spring:
+  profiles: test
+  datasource:
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+    url: jdbc:jdbc:tc:mysql:5.7.22://localhost:3306/test
+    dbcp2:
+      driver-class-name: com.mysql.jdbc.Driver
+      test-on-borrow: true
+      validation-query: SELECT 1
+      max-total: 1
+  jpa:
+    generate-ddl: true
+    #    show-sql: true
+    hibernate:
+      ddl-auto: update
+    #      naming:
+    #        physical-strategy: org.springframework.boot.orm.jpa.hiberante.SpringPhysicalNamingStrategy
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL57Dialect
+        format_sql: true
+
+logging:
+  level:
+    web: debug
+    sql: debug

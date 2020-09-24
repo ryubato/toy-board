@@ -36,7 +36,7 @@ import java.util.Properties;
  * https://www.thomasvitale.com/spring-data-jpa-hibernate-java-configuration/
  *
  */
-@Configuration
+//@Configuration
 @EnableJpaRepositories(basePackages = "me.ryubato.domain")
 @EnableTransactionManagement
 

@@ -1,6 +1,11 @@
 spring:
   profiles:
     active: local
+
+---
+
+spring:
+  profiles: default
   thymeleaf:
     mode: HTML
     cache: false
@@ -15,12 +20,8 @@ spring:
     username: sa
     password:
   jpa:
-    #    show-sql: true
-
     hibernate:
       ddl-auto: update
-    #      naming:
-    #        physical-strategy: org.springframework.boot.orm.jpa.hiberante.SpringPhysicalNamingStrategy
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL57Dialect
@@ -29,7 +30,7 @@ spring:
 logging:
   level:
     web: debug
-    sql: trace
+    sql: debug
 
 ---
 
@@ -45,11 +46,8 @@ spring:
       max-total: 1
   jpa:
     generate-ddl: true
-    #    show-sql: true
     hibernate:
       ddl-auto: update
-    #      naming:
-    #        physical-strategy: org.springframework.boot.orm.jpa.hiberante.SpringPhysicalNamingStrategy
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL57Dialect

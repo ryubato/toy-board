@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
@@ -22,9 +21,9 @@ import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTest
 @DataJpaTest
 @ActiveProfiles("test")
 @AutoConfigureTestDatabase(replace = NONE)
-public class SampleContainerTest {
+public class TestContainerTest {
 
-    private final Logger log = LoggerFactory.getLogger(SampleContainerTest.class);
+    private final Logger log = LoggerFactory.getLogger(TestContainerTest.class);
 
     @Container
     static MySQLContainer mysql = new MySQLContainer();
@@ -34,6 +33,7 @@ public class SampleContainerTest {
 
     @Test
     void initContainerTest() {
+
         log.info("container mysql databaseName : " + mysql.getDatabaseName());
         log.info("container mysql databaseName : " + mysql.getExposedPorts());
 

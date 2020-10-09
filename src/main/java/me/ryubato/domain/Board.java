@@ -38,7 +38,7 @@ public class Board {
     private List<Comment> comments = new ArrayList<>();
 
     @Builder
-    public Board(Long id, String title, String content, String writer, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+    public Board(List<Comment> comments, Long id, String title, String content, String writer, LocalDateTime createdDate, LocalDateTime modifiedDate) {
         this.id = id;
         this.title = title;
         this.content = content;

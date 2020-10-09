@@ -1,11 +1,11 @@
 package me.ryubato.web;
 
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import me.ryubato.domain.Board;
 
-@Getter
+@Data
 @NoArgsConstructor
 public class BoardSaveRequestDto {
 

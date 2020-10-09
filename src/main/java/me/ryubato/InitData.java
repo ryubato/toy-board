@@ -38,7 +38,6 @@ public class InitData {
                 commentRepository.save(comment);
             }
         }
-
     }
 
     private Board getBoard() {
@@ -51,7 +50,6 @@ public class InitData {
 
     private Comment getComment(Board board, Comment parent) {
         return Comment.builder()
-                .board(board)
                 .content("감사합니다.")
                 .writer("손님")
                 .parent(parent)

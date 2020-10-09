@@ -1,4 +1,19 @@
 spring:
+  profiles:
+    active: local
+
+---
+
+spring:
+  profiles: default
+  thymeleaf:
+    mode: HTML
+    cache: false
+
+---
+
+spring:
+  profiles: local
   datasource:
     driver-class-name: org.h2.Driver
     url: jdbc:h2:tcp://localhost:1521/testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false
@@ -9,19 +24,10 @@ spring:
       ddl-auto: create-drop
     properties:
       hibernate:
+        dialect: org.hibernate.dialect.MySQL57Dialect
         format_sql: true
-
-  devtools:
-    livereload:
-      enabled: true
-    restart:
-      enabled: true
-
-  thymeleaf:
-    mode: HTML5
-    cache: false
 
 logging:
   level:
     web: debug
-    sql: trace
+    sql: debug

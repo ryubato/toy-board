@@ -1,0 +1,31 @@
+package me.ryubato.web;
+
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotBlank;
+
+@Data
+@NoArgsConstructor
+public class BoardForm {
+
+    @NotBlank
+    @Length(max = 20)
+    private String title;
+
+    @NotBlank
+    private String content;
+
+    @NotBlank
+    @Length(max = 20)
+    private String writer;
+
+    @Builder
+    public BoardForm(String title, String content, String writer) {
+        this.title = title;
+        this.content = content;
+        this.writer = writer;
+    }
+}

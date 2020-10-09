@@ -1,20 +1,18 @@
 package me.ryubato.domain;
 
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import me.ryubato.config.BaseTimeEntity;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "boards")
 @Getter
-@EqualsAndHashCode
+@EqualsAndHashCode(of = "id", callSuper = false)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Board {
+public class Board extends BaseTimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "board_id")
@@ -27,28 +25,50 @@ public class Board {
     @Column(nullable = false, updatable = false)
     private String writer;
 
-    @Column(updatable = false)
-    @CreationTimestamp
-    private LocalDateTime createdDate;
+    private Long viewCount;
 
-    @UpdateTimestamp
-    private LocalDateTime modifiedDate;
+    private Long recommendationCount; // TODO 추천한 사용자와의 연관관계 필요?
 
-    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "board_id")
     private List<Comment> comments = new ArrayList<>();
 
     @Builder
-    public Board(List<Comment> comments, Long id, String title, String content, String writer, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+    public Board(Long id, String title, String content, String writer, Long viewCount, Long recommendationCount) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.writer = writer;
-        this.createdDate = createdDate;
-        this.modifiedDate = modifiedDate;
+        this.viewCount = viewCount;
+        this.recommendationCount = recommendationCount;
     }
 
-    public void update(String title, String content) {
+    public static Board createBoard(String title, String content, String writer) {
+        return Board.builder()
+                .title(title)
+                .content(content)
+                .writer(writer)
+                .build();
+    }
+
+    public void updateBoard(String title, String content) {
         this.title = title;
         this.content = content;
+    }
+
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
+    }
+
+    public void view() {
+        this.viewCount += 1;
+    }
+
+    public void recommend() {
+        this.recommendationCount += 1;
+    }
+
+    public void cancelRecommend() {
+        this.recommendationCount -= 1;
     }
 }

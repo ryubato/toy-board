@@ -8,10 +8,9 @@ import java.util.List;
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     @Query(value = "select c from Comment c where c.parent = ?1")
-    List<Comment> findAllByParentNoNative(Comment parent);
+    List<Comment> findAllByParent(Comment parent);
 
     @Query(value = "select * from comments c where c.parent_comment_id = ?1", nativeQuery = true)
-    List<Comment> findAllByParentNative(Long id);
-
+    List<Comment> findAllByParentUsingNativeQuery(Long id);
 
 }

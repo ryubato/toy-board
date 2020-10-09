@@ -1,7 +1,10 @@
 package me.ryubato.component;
 
-import me.ryubato.web.BoardListResponseDto;
-import me.ryubato.web.BoardSaveRequestDto;
+import me.ryubato.Fixtures;
+import me.ryubato.domain.Board;
+import me.ryubato.domain.BoardRepository;
+import me.ryubato.web.BoardForm;
+import me.ryubato.web.BoardListDto;
 import me.ryubato.web.RestResponsePage;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.http.HttpMethod.GET;
 
@@ -27,28 +31,25 @@ import static org.springframework.http.HttpMethod.GET;
 public class BoardComponentTest {
 
     @Autowired
+    private BoardRepository boardRepository;
+
+    @Autowired
     private TestRestTemplate restTemplate;
 
     @LocalServerPort
     private int port;
 
     @Test
-    void 게시글_정상등록() throws Exception {
-
+    void 게시글_등록() throws Exception {
         //given
         String baseUrl = "http://localhost:" + port + "/api/v1/boards";
 
-        BoardSaveRequestDto dto = BoardSaveRequestDto
-                .builder()
-                .title("테스트")
-                .content("테스트")
-                .writer("테스트")
-                .build();
+        BoardForm dto = Fixtures.aBoardForm().build();
 
         HttpHeaders headers = new HttpHeaders();
         headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
 
-        HttpEntity<BoardSaveRequestDto> request = new HttpEntity<>(dto, headers);
+        HttpEntity<BoardForm> request = new HttpEntity<>(dto, headers);
 
         //when
         ResponseEntity<Long> responseEntity = restTemplate.postForEntity(baseUrl, request, Long.class);
@@ -59,12 +60,27 @@ public class BoardComponentTest {
     }
 
     @Test
+    void 게시글_삭제() {
+        //given
+        Board board = Fixtures.aBoard().build();
+        boardRepository.save(board);
+
+        String baseUrl = "http://localhost:" + port + "/api/v1/boards/" + Math.toIntExact(board.getId());
+
+        //when
+        restTemplate.delete(baseUrl);
+
+        //then
+        assertThat(boardRepository.findById(board.getId())).isEmpty();
+    }
+
+    @Test
     void 게시글_목록조회_v1() {
         //given
         String baseUrl = "http://localhost:" + port + "/api/v1/boards";
         //when
-        ResponseEntity<List<BoardListResponseDto>> responseEntity =
-                restTemplate.exchange(baseUrl, GET, null, new ParameterizedTypeReference<List<BoardListResponseDto>>() {
+        ResponseEntity<List<BoardListDto>> responseEntity =
+                restTemplate.exchange(baseUrl, GET, null, new ParameterizedTypeReference<List<BoardListDto>>() {
                 });
         //then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -75,10 +91,11 @@ public class BoardComponentTest {
         //given
         String baseUrl = "http://localhost:" + port + "/api/v2/boards?page=1&size=1";
 
-        ParameterizedTypeReference<RestResponsePage<BoardListResponseDto>> type = new ParameterizedTypeReference<RestResponsePage<BoardListResponseDto>>() {};
+        ParameterizedTypeReference<RestResponsePage<BoardListDto>> type = new ParameterizedTypeReference<RestResponsePage<BoardListDto>>() {
+        };
 
         //when
-        ResponseEntity<RestResponsePage<BoardListResponseDto>> responseEntity =
+        ResponseEntity<RestResponsePage<BoardListDto>> responseEntity =
                 restTemplate.exchange(baseUrl, GET, null, type);
 
         //then
@@ -87,7 +104,7 @@ public class BoardComponentTest {
     }
 
     @Test
-    void 게시글_목록조회_v3_페이징_CustomRestResponsePage() {
+    void 게시글_목록조회_v3_페이징() {
         //given
         String baseUrl = "http://localhost:" + port + "/api/v3/boards";
 
@@ -98,10 +115,11 @@ public class BoardComponentTest {
         String uriString = UriComponentsBuilder.fromUriString(baseUrl)
                 .queryParams(params).toUriString();
 
-        ParameterizedTypeReference<RestResponsePage<BoardListResponseDto>> type = new ParameterizedTypeReference<RestResponsePage<BoardListResponseDto>>() {};
+        ParameterizedTypeReference<RestResponsePage<BoardListDto>> type = new ParameterizedTypeReference<RestResponsePage<BoardListDto>>() {
+        };
 
         //when
-        ResponseEntity<RestResponsePage<BoardListResponseDto>> responseEntity =
+        ResponseEntity<RestResponsePage<BoardListDto>> responseEntity =
                 restTemplate.exchange(uriString, GET, null, type);
 
         //then

@@ -1,57 +1,54 @@
 package me.ryubato.web;
 
 import lombok.RequiredArgsConstructor;
-import me.ryubato.domain.Board;
-import me.ryubato.domain.BoardRepository;
+import me.ryubato.service.BoardService;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
 public class BoardApiController {
 
-    private final BoardRepository boardRepository;
+    private final BoardService boardService;
 
     @PostMapping("/api/v1/boards")
-    public Long save(@RequestBody BoardSaveRequestDto boardSaveRequestDto) {
-        Board board = boardSaveRequestDto.toEntity();
-        return boardRepository.save(board).getId();
+    public Long save(@RequestBody BoardForm boardForm) {  // TODO @Valid 적용
+        return boardService.save(boardForm);
     }
 
     @DeleteMapping("/api/v1/boards/{id}")
-    public void delete(@RequestParam("id") Long id) {
-        Board board = boardRepository.findById(id).orElseThrow(IllegalArgumentException::new);
-        boardRepository.delete(board);
+    public void delete(@PathVariable("id") Long id) {
+        boardService.delete(id);
     }
 
     @PutMapping("/api/v1/boards/{id}")
-    public void update(@PathVariable("id") Long id, @RequestBody BoardSaveRequestDto boardSaveRequestDto) {
-        Board board = boardRepository.findById(id).orElseThrow(IllegalArgumentException::new);
-        board.update(boardSaveRequestDto.getTitle(), boardSaveRequestDto.getContent());
+    public void update(@PathVariable("id") Long id, @RequestBody BoardForm boardForm) {
+        boardService.update(id, boardForm);
+    }
+
+    @GetMapping("/api/v1/boards/{id}")
+    public BoardDto findById(@PathVariable Long id) {
+        return boardService.getBoard(id);
     }
 
     @GetMapping("/api/v1/boards")
-    public List<BoardListResponseDto> findAll() {
-        return boardRepository.findAll().stream()
-                .map(BoardListResponseDto::new).collect(Collectors.toList());
+    public List<BoardListDto> findAll() {
+        return boardService.getBoards();
     }
 
     @GetMapping(value = "/api/v2/boards", params = {"page", "size"})
-    public Page<BoardListResponseDto> findAllWithPagingDefaultType(
+    public Page<BoardListDto> findAllWithPagingDefaultType(
             @RequestParam("page") int page,
             @RequestParam("size") int size) {
-        return boardRepository.findAll(PageRequest.of(page, size)).map(BoardListResponseDto::new);
+        return boardService.getBoardsWithPagingDefaultType(page, size);
     }
 
     @GetMapping(value = "/api/v3/boards", params = {"page", "size"})
-    public CustomRestResponsePage<BoardListResponseDto> findAllWithPagingTypeCustomRestResponsePage(
+    public CustomRestResponsePage<BoardListDto> findAllWithPagingTypeCustomRestResponsePage(
             @RequestParam("page") int page,
             @RequestParam("size") int size) {
-        Page<BoardListResponseDto> response = boardRepository.findAll(PageRequest.of(page, size)).map(BoardListResponseDto::new);
-        return new CustomRestResponsePage<BoardListResponseDto>(response.getContent(), response.getNumber(), response.getSize(), response.getTotalElements());
+        return boardService.getBoardsWithPagingCustomRestResponsePage(page, size);
     }
 }

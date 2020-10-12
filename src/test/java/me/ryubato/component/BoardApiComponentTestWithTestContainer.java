@@ -30,7 +30,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @Testcontainers
 @ActiveProfiles("test")
 @TestInstance(Lifecycle.PER_CLASS)
-@SpringBootTest(properties = {"init-data=false"}, webEnvironment = RANDOM_PORT)
+@SpringBootTest(webEnvironment = RANDOM_PORT)
 public class BoardApiComponentTestWithTestContainer {
 
     private final Logger log = LoggerFactory.getLogger(BoardApiComponentTestWithTestContainer.class);

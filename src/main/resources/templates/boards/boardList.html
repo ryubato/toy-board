@@ -16,27 +16,35 @@
 
 <body>
 <div class="container">
-    <h1>게시판</h1>
-    <table class="table table-horizontal table-bordered" th:if="${boards.size() > 0}">
-        <thead>
-        <tr>
-            <th>#</th>
-            <th>제목</th>
-            <th>작성자</th>
-            <th>등록일</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="board: ${boards}">
-            <td th:text="${board.id}"></td>
-            <td>
-                <a href="detail.html" th:href="@{'/api/v1/boards/' + ${board.id}}" th:text="${board.title}"></a>
-            </td>
-            <td th:text="${board.writer}"></td>
-            <td th:text="${board.modifiedDate}"></td>
-        </tr>
-        </tbody>
-    </table>
+    <div>
+        <h1>게시판</h1>
+        <table class="table table-horizontal table-bordered" th:if="${boards.size() > 0}">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>등록일</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="board: ${boards}">
+                <td th:text="${board.id}"></td>
+                <td>
+                    <a href="detail.html" th:href="@{'/api/v1/boards/' + ${board.id}}" th:text="${board.title}"></a>
+                </td>
+                <td th:text="${board.writer}"></td>
+                <td th:text="${board.modifiedDate}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <h1>게시판상세</h1>
+        <form>
+            
+        </form>
+    </div>
 </div>
 </body>
 

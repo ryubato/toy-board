@@ -3,8 +3,8 @@ package me.ryubato.config;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.core.env.Environment;
@@ -34,7 +34,6 @@ import java.util.Properties;
  * 
  * Table Not Found 문제
  * https://www.thomasvitale.com/spring-data-jpa-hibernate-java-configuration/
- *
  */
 //@Configuration
 @EnableJpaRepositories(basePackages = "me.ryubato.domain")

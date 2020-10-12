@@ -23,13 +23,15 @@ class BoardTest {
     void auditingBaseTimeEntityTest() throws Exception {
 
         //given
+        final LocalDateTime NOW = LocalDateTime.now();
+
         Board board = Fixtures.aBoard().id(null).build();
 
         //when
         boardRepository.save(board);
 
         //then
-        assertThat(board.getCreatedDate()).isInstanceOf(LocalDateTime.class);
-        assertThat(board.getLastModifiedDate()).isInstanceOf(LocalDateTime.class);
+        assertThat(board.getCreatedDate()).isAfterOrEqualTo(NOW);
+        assertThat(board.getLastModifiedDate()).isAfterOrEqualTo(NOW);
     }
 }

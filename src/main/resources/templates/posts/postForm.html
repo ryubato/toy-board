@@ -9,11 +9,11 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <script src="/js/bootstrap.min.js"></script>
 
-    <title>Board Form</title>
+    <title>Post Form</title>
 </head>
 <body>
 <div class="container">
-    <form role="form" action="/boards/new" th:object="${boardForm}" method="POST">
+    <form role="form" action="/posts/new" th:object="${postForm}" method="POST">
         <div class="form-group">
             <label th:for="title">제목</label>
             <input type="text" th:field="*{title}" class="form-control" placeholder="제목을 입력하세요">

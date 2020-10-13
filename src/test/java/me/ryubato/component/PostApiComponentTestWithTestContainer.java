@@ -1,8 +1,8 @@
 package me.ryubato.component;
 
 import me.ryubato.Fixtures;
-import me.ryubato.domain.BoardRepository;
-import me.ryubato.web.BoardListDto;
+import me.ryubato.domain.PostRepository;
+import me.ryubato.service.PostListDto;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -31,32 +31,32 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @ActiveProfiles("test")
 @TestInstance(Lifecycle.PER_CLASS)
 @SpringBootTest(webEnvironment = RANDOM_PORT)
-public class BoardApiComponentTestWithTestContainer {
+public class PostApiComponentTestWithTestContainer {
 
-    private final Logger log = LoggerFactory.getLogger(BoardApiComponentTestWithTestContainer.class);
+    private final Logger log = LoggerFactory.getLogger(PostApiComponentTestWithTestContainer.class);
 
     @Container
     static MySQLContainer mysql = new MySQLContainer();
 
-    @Autowired private BoardRepository boardRepository;
+    @Autowired private PostRepository postRepository;
     @Autowired private TestRestTemplate restTemplate;
     @LocalServerPort private String port;
 
     @BeforeAll
     void init() {
 
-        boardRepository.save(Fixtures.aBoard().build());
-        boardRepository.save(Fixtures.aBoard().build());
+        postRepository.save(Fixtures.aPost().build());
+        postRepository.save(Fixtures.aPost().build());
 
     }
 
     @Test
     void getBoardsTest() {
 
-        String baseUrl = "http://localhost:" + port + "/api/v1/boards";
+        String baseUrl = "http://localhost:" + port + "/api/v1/posts";
 
-        ResponseEntity<List<BoardListDto>> responseEntity =
-                restTemplate.exchange(baseUrl, HttpMethod.GET, null, new ParameterizedTypeReference<List<BoardListDto>>() {});
+        ResponseEntity<List<PostListDto>> responseEntity =
+                restTemplate.exchange(baseUrl, HttpMethod.GET, null, new ParameterizedTypeReference<List<PostListDto>>() {});
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody().size()).isEqualTo(2);

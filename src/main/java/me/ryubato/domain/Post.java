@@ -13,7 +13,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Entity
 @Table(name = "posts")
 @Getter
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor(access = PROTECTED)
 public class Post extends BaseTimeEntity {
 
@@ -40,5 +40,19 @@ public class Post extends BaseTimeEntity {
         this.writer = writer;
         this.content = content;
         this.boardId = boardId;
+    }
+
+    public static Post createPost(String title, String writer, String content, Long boardId) {
+        return Post.builder()
+                .title(title)
+                .writer(writer)
+                .content(content)
+                .boardId(boardId)
+                .build();
+    }
+
+    public void updatePost(String title, String content) {
+        this.title = title;
+        this.content = content;
     }
 }

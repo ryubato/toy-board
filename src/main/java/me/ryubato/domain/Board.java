@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "boards")
 @Getter
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Board extends BaseTimeEntity {
 
@@ -23,6 +23,11 @@ public class Board extends BaseTimeEntity {
     public Board(Long id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public static Board createBoard(String name) {
+        return Board.builder()
+                .name(name).build();
     }
 }
 

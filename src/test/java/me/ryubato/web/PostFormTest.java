@@ -15,7 +15,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestInstance(Lifecycle.PER_CLASS)
-public class BoardFormTest {
+public class PostFormTest {
 
     @BeforeAll
     void setup() {
@@ -24,16 +24,16 @@ public class BoardFormTest {
     }
 
     @Test
-    void boardForm_validation_test() {
+    void postForm_validation_test() {
 
         final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
-        BoardForm boardForm = Fixtures.aBoardForm()
+        PostForm postForm = Fixtures.aPostForm()
                 .title("123456789012345678901234567890")
                 .content("")
                 .build();
 
-        Set<ConstraintViolation<BoardForm>> constraintViolations = validator.validate(boardForm);
+        Set<ConstraintViolation<PostForm>> constraintViolations = validator.validate(postForm);
 
         assertEquals(2, constraintViolations.size());
 

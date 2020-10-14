@@ -4,8 +4,9 @@ import lombok.RequiredArgsConstructor;
 import me.ryubato.domain.Post;
 import me.ryubato.domain.PostRepository;
 import me.ryubato.web.CustomRestResponsePage;
-import me.ryubato.web.PostDto;
+import me.ryubato.web.PostRespDto;
 import me.ryubato.web.PostForm;
+import me.ryubato.web.PostListRespDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -34,22 +35,25 @@ public class PostService {
         post.updatePost(postForm.getTitle(), postForm.getContent());
     }
 
-    public PostDto getPost(Long postId) {
+    public PostRespDto getPost(Long postId) {
         Post post = postRepository.findById(postId).orElseThrow(IllegalArgumentException::new);
-        return new PostDto(post);
+        return new PostRespDto(post);
     }
 
-    public List<PostListDto> getPosts() {
-        return postRepository.findAll().stream().map(PostListDto::new).collect(Collectors.toList());
+    public List<PostListRespDto> getPosts() {
+        return postRepository.findAll().stream().map(PostListRespDto::new).collect(Collectors.toList());
     }
 
-    public Page<PostListDto> getPostsWithPagingDefaultType(int page, int size) {
-        return postRepository.findAll(PageRequest.of(page, size)).map(PostListDto::new);
+    public Page<PostListRespDto> getPostsWithPagingDefaultType(int page, int size) {
+        return postRepository.findAll(PageRequest.of(page, size)).map(PostListRespDto::new);
     }
 
-    public CustomRestResponsePage<PostListDto> getPostsWithPagingCustomRestResponsePage(int page, int size) {
-        Page<PostListDto> response = postRepository.findAll(PageRequest.of(page, size)).map(PostListDto::new);
+    public CustomRestResponsePage<PostListRespDto> getPostsWithPagingCustomRestResponsePage(int page, int size) {
+        Page<PostListRespDto> response = postRepository.findAll(PageRequest.of(page, size)).map(PostListRespDto::new);
         return new CustomRestResponsePage<>(response.getContent(), response.getNumber(), response.getSize(), response.getTotalElements());
     }
 
+    public List<PostListRespDto> getPostsByBoardId(Long boardId) {
+        return postRepository.findByBoardId(boardId).stream().map(PostListRespDto::new).collect(Collectors.toList());
+    }
 }

@@ -3,7 +3,7 @@ package me.ryubato.component;
 import me.ryubato.Fixtures;
 import me.ryubato.domain.Post;
 import me.ryubato.domain.PostRepository;
-import me.ryubato.service.PostListDto;
+import me.ryubato.web.PostListRespDto;
 import me.ryubato.web.PostForm;
 import me.ryubato.web.RestResponsePage;
 import org.junit.jupiter.api.Test;
@@ -77,8 +77,8 @@ public class PostComponentTest {
         //given
         String baseUrl = "http://localhost:" + port + "/api/v1/posts";
         //when
-        ResponseEntity<List<PostListDto>> responseEntity =
-                restTemplate.exchange(baseUrl, GET, null, new ParameterizedTypeReference<List<PostListDto>>() {
+        ResponseEntity<List<PostListRespDto>> responseEntity =
+                restTemplate.exchange(baseUrl, GET, null, new ParameterizedTypeReference<List<PostListRespDto>>() {
                 });
         //then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -89,11 +89,11 @@ public class PostComponentTest {
         //given
         String baseUrl = "http://localhost:" + port + "/api/v2/posts?page=1&size=1";
 
-        ParameterizedTypeReference<RestResponsePage<PostListDto>> type = new ParameterizedTypeReference<RestResponsePage<PostListDto>>() {
+        ParameterizedTypeReference<RestResponsePage<PostListRespDto>> type = new ParameterizedTypeReference<RestResponsePage<PostListRespDto>>() {
         };
 
         //when
-        ResponseEntity<RestResponsePage<PostListDto>> responseEntity =
+        ResponseEntity<RestResponsePage<PostListRespDto>> responseEntity =
                 restTemplate.exchange(baseUrl, GET, null, type);
 
         //then
@@ -113,11 +113,11 @@ public class PostComponentTest {
         String uriString = UriComponentsBuilder.fromUriString(baseUrl)
                 .queryParams(params).toUriString();
 
-        ParameterizedTypeReference<RestResponsePage<PostListDto>> type = new ParameterizedTypeReference<RestResponsePage<PostListDto>>() {
+        ParameterizedTypeReference<RestResponsePage<PostListRespDto>> type = new ParameterizedTypeReference<RestResponsePage<PostListRespDto>>() {
         };
 
         //when
-        ResponseEntity<RestResponsePage<PostListDto>> responseEntity =
+        ResponseEntity<RestResponsePage<PostListRespDto>> responseEntity =
                 restTemplate.exchange(uriString, GET, null, type);
 
         //then

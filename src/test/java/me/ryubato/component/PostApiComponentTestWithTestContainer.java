@@ -2,7 +2,7 @@ package me.ryubato.component;
 
 import me.ryubato.Fixtures;
 import me.ryubato.domain.PostRepository;
-import me.ryubato.service.PostListDto;
+import me.ryubato.web.PostListRespDto;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -35,8 +35,7 @@ public class PostApiComponentTestWithTestContainer {
 
     private final Logger log = LoggerFactory.getLogger(PostApiComponentTestWithTestContainer.class);
 
-    @Container
-    static MySQLContainer mysql = new MySQLContainer();
+    @Container static MySQLContainer mysql = new MySQLContainer();
 
     @Autowired private PostRepository postRepository;
     @Autowired private TestRestTemplate restTemplate;
@@ -44,10 +43,8 @@ public class PostApiComponentTestWithTestContainer {
 
     @BeforeAll
     void init() {
-
         postRepository.save(Fixtures.aPost().build());
         postRepository.save(Fixtures.aPost().build());
-
     }
 
     @Test
@@ -55,8 +52,8 @@ public class PostApiComponentTestWithTestContainer {
 
         String baseUrl = "http://localhost:" + port + "/api/v1/posts";
 
-        ResponseEntity<List<PostListDto>> responseEntity =
-                restTemplate.exchange(baseUrl, HttpMethod.GET, null, new ParameterizedTypeReference<List<PostListDto>>() {});
+        ResponseEntity<List<PostListRespDto>> responseEntity =
+                restTemplate.exchange(baseUrl, HttpMethod.GET, null, new ParameterizedTypeReference<List<PostListRespDto>>() {});
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody().size()).isEqualTo(2);

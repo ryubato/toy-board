@@ -2,7 +2,7 @@ package me.ryubato.component;
 
 import me.ryubato.Fixtures;
 import me.ryubato.domain.PostRepository;
-import me.ryubato.web.PostListRespDto;
+import me.ryubato.web.PostListRspDto;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -52,8 +52,8 @@ public class PostApiComponentTestWithTestContainer {
 
         String baseUrl = "http://localhost:" + port + "/api/v1/posts";
 
-        ResponseEntity<List<PostListRespDto>> responseEntity =
-                restTemplate.exchange(baseUrl, HttpMethod.GET, null, new ParameterizedTypeReference<List<PostListRespDto>>() {});
+        ResponseEntity<List<PostListRspDto>> responseEntity =
+                restTemplate.exchange(baseUrl, HttpMethod.GET, null, new ParameterizedTypeReference<List<PostListRspDto>>() {});
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody().size()).isEqualTo(2);

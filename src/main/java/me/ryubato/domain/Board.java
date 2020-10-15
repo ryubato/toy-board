@@ -25,7 +25,7 @@ public class Board extends BaseTimeEntity {
         this.name = name;
     }
 
-    public static Board createBoard(String name) {
+    public static Board create(String name) {
         return Board.builder()
                 .name(name).build();
     }

@@ -40,7 +40,7 @@ public class Comment extends BaseTimeEntity {
         this.child = child;
     }
 
-    public static Comment createComment(String content, String writer, Comment parent) {
+    public static Comment create(String content, String writer, Comment parent) {
         return Comment.builder()
                 .content(content)
                 .writer(writer)

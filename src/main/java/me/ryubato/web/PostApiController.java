@@ -18,40 +18,40 @@ public class PostApiController {
         return postService.save(postForm);
     }
 
-    @DeleteMapping("/api/v1/posts/{id}")
-    public void delete(@PathVariable("id") Long id) {
+    @DeleteMapping("/api/v1/posts/{postId}")
+    public void delete(@PathVariable("postId") Long id) {
         postService.delete(id);
     }
 
-    @PutMapping("/api/v1/posts/{id}")
-    public void update(@PathVariable("id") Long id, @RequestBody PostForm postForm) {
+    @PutMapping("/api/v1/posts/{postId}")
+    public void update(@PathVariable("postId") Long id, @RequestBody PostForm postForm) {
         postService.update(id, postForm);
     }
 
-    @GetMapping("/api/v1/posts/{id}")
-    public PostRespDto findById(@PathVariable Long id) {
+    @GetMapping("/api/v1/posts/{postId}")
+    public PostRspDto findById(@PathVariable("postId") Long id) {
         return postService.getPost(id);
     }
 
     @GetMapping("/api/v1/posts")
-    public List<PostListRespDto> findAll() {
+    public List<PostListRspDto> findAll() {
         return postService.getPosts();
     }
 
     @GetMapping("/api/v1/boards/{boardId}/posts")
-    public List<PostListRespDto> findPostByBoardId(@PathVariable("boardId") Long boardId) {
+    public List<PostListRspDto> findPostByBoardId(@PathVariable("boardId") Long boardId) {
         return postService.getPostsByBoardId(boardId);
     }
 
     @GetMapping(value = "/api/v2/posts", params = {"page", "size"})
-    public Page<PostListRespDto> findAllWithPagingDefaultType(
+    public Page<PostListRspDto> findAllWithPagingDefaultType(
             @RequestParam("page") int page,
             @RequestParam("size") int size) {
         return postService.getPostsWithPagingDefaultType(page, size);
     }
 
     @GetMapping(value = "/api/v3/posts", params = {"page", "size"})
-    public CustomRestResponsePage<PostListRespDto> findAllWithPagingTypeCustomRestResponsePage(
+    public CustomRestResponsePage<PostListRspDto> findAllWithPagingTypeCustomRestResponsePage(
             @RequestParam("page") int page,
             @RequestParam("size") int size) {
         return postService.getPostsWithPagingCustomRestResponsePage(page, size);

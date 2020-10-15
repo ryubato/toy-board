@@ -42,7 +42,7 @@ public class Post extends BaseTimeEntity {
         this.boardId = boardId;
     }
 
-    public static Post createPost(String title, String writer, String content, Long boardId) {
+    public static Post create(String title, String writer, String content, Long boardId) {
         return Post.builder()
                 .title(title)
                 .writer(writer)
@@ -51,7 +51,7 @@ public class Post extends BaseTimeEntity {
                 .build();
     }
 
-    public void updatePost(String title, String content) {
+    public void update(String title, String content) {
         this.title = title;
         this.content = content;
     }

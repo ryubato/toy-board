@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 @RequiredArgsConstructor
-public class PostController {
+public class ViewController {
 
     private final PostService postService;
 

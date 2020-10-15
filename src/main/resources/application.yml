@@ -16,9 +16,10 @@ spring:
   profiles: local
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:tcp://localhost:1521/boarddb;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    url: jdbc:h2:tcp://localhost:1521/board;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     username: sa
     password:
+#    data: classpath:sql/data.sql
   jpa:
     hibernate:
       ddl-auto: create

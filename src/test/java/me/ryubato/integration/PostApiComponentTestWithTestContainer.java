@@ -1,4 +1,4 @@
-package me.ryubato.component;
+package me.ryubato.integration;
 
 import me.ryubato.Fixtures;
 import me.ryubato.domain.PostRepository;

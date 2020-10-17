@@ -29,10 +29,6 @@ spring:
 #        storage_engine: innodb
 #        format_sql: true
 
-logging:
-  level:
-    sql: debug
-
 ---
 
 spring:

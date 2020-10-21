@@ -14,13 +14,13 @@ public class ViewController {
 
     @GetMapping("/")
     public String home() {
-        return "redirect:/posts/postList";
+        return "redirect:/board";
     }
 
-    @GetMapping("/posts/postList")
+    @GetMapping("/board")
     public String getPosts(Model model) {
         model.addAttribute("posts", postService.getPosts());
-        return "posts/postList";
+        return "board";
     }
 
 }

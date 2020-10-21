@@ -1,13 +1,14 @@
-package me.ryubato.component;
+package me.ryubato.integration;
 
 import me.ryubato.Fixtures;
-import me.ryubato.domain.Board;
-import me.ryubato.domain.BoardRepository;
-import me.ryubato.web.BoardForm;
-import me.ryubato.web.BoardListDto;
+import me.ryubato.domain.Post;
+import me.ryubato.domain.PostRepository;
+import me.ryubato.web.PostListRspDto;
+import me.ryubato.web.PostForm;
 import me.ryubato.web.RestResponsePage;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
@@ -20,18 +21,15 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.http.HttpMethod.GET;
 
-@SpringBootTest(
-        webEnvironment = RANDOM_PORT,
-        properties = {"init-data=false"}
-)
-public class BoardComponentTest {
+@SpringBootTest(webEnvironment = RANDOM_PORT)
+@AutoConfigureTestDatabase
+public class PostComponentTest {
 
     @Autowired
-    private BoardRepository boardRepository;
+    private PostRepository postRepository;
 
     @Autowired
     private TestRestTemplate restTemplate;
@@ -42,14 +40,14 @@ public class BoardComponentTest {
     @Test
     void 게시글_등록() throws Exception {
         //given
-        String baseUrl = "http://localhost:" + port + "/api/v1/boards";
+        String baseUrl = "http://localhost:" + port + "/api/v1/posts";
 
-        BoardForm dto = Fixtures.aBoardForm().build();
+        PostForm dto = Fixtures.aPostForm().build();
 
         HttpHeaders headers = new HttpHeaders();
         headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
 
-        HttpEntity<BoardForm> request = new HttpEntity<>(dto, headers);
+        HttpEntity<PostForm> request = new HttpEntity<>(dto, headers);
 
         //when
         ResponseEntity<Long> responseEntity = restTemplate.postForEntity(baseUrl, request, Long.class);
@@ -62,25 +60,25 @@ public class BoardComponentTest {
     @Test
     void 게시글_삭제() {
         //given
-        Board board = Fixtures.aBoard().build();
-        boardRepository.save(board);
+        Post post = Fixtures.aPost().build();
+        postRepository.save(post);
 
-        String baseUrl = "http://localhost:" + port + "/api/v1/boards/" + Math.toIntExact(board.getId());
+        String baseUrl = "http://localhost:" + port + "/api/v1/posts/" + Math.toIntExact(post.getId());
 
         //when
         restTemplate.delete(baseUrl);
 
         //then
-        assertThat(boardRepository.findById(board.getId())).isEmpty();
+        assertThat(postRepository.findById(post.getId())).isEmpty();
     }
 
     @Test
     void 게시글_목록조회_v1() {
         //given
-        String baseUrl = "http://localhost:" + port + "/api/v1/boards";
+        String baseUrl = "http://localhost:" + port + "/api/v1/posts";
         //when
-        ResponseEntity<List<BoardListDto>> responseEntity =
-                restTemplate.exchange(baseUrl, GET, null, new ParameterizedTypeReference<List<BoardListDto>>() {
+        ResponseEntity<List<PostListRspDto>> responseEntity =
+                restTemplate.exchange(baseUrl, GET, null, new ParameterizedTypeReference<List<PostListRspDto>>() {
                 });
         //then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -89,13 +87,13 @@ public class BoardComponentTest {
     @Test
     void 게시글_목록조회_v2_페이징() {
         //given
-        String baseUrl = "http://localhost:" + port + "/api/v2/boards?page=1&size=1";
+        String baseUrl = "http://localhost:" + port + "/api/v2/posts?page=1&size=1";
 
-        ParameterizedTypeReference<RestResponsePage<BoardListDto>> type = new ParameterizedTypeReference<RestResponsePage<BoardListDto>>() {
+        ParameterizedTypeReference<RestResponsePage<PostListRspDto>> type = new ParameterizedTypeReference<RestResponsePage<PostListRspDto>>() {
         };
 
         //when
-        ResponseEntity<RestResponsePage<BoardListDto>> responseEntity =
+        ResponseEntity<RestResponsePage<PostListRspDto>> responseEntity =
                 restTemplate.exchange(baseUrl, GET, null, type);
 
         //then
@@ -106,7 +104,7 @@ public class BoardComponentTest {
     @Test
     void 게시글_목록조회_v3_페이징() {
         //given
-        String baseUrl = "http://localhost:" + port + "/api/v3/boards";
+        String baseUrl = "http://localhost:" + port + "/api/v3/posts";
 
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("page", "1");
@@ -115,11 +113,11 @@ public class BoardComponentTest {
         String uriString = UriComponentsBuilder.fromUriString(baseUrl)
                 .queryParams(params).toUriString();
 
-        ParameterizedTypeReference<RestResponsePage<BoardListDto>> type = new ParameterizedTypeReference<RestResponsePage<BoardListDto>>() {
+        ParameterizedTypeReference<RestResponsePage<PostListRspDto>> type = new ParameterizedTypeReference<RestResponsePage<PostListRspDto>>() {
         };
 
         //when
-        ResponseEntity<RestResponsePage<BoardListDto>> responseEntity =
+        ResponseEntity<RestResponsePage<PostListRspDto>> responseEntity =
                 restTemplate.exchange(uriString, GET, null, type);
 
         //then

@@ -1,39 +1,34 @@
 package me.ryubato;
 
 import me.ryubato.domain.Board;
-import me.ryubato.domain.Board.BoardBuilder;
 import me.ryubato.domain.Comment;
-import me.ryubato.domain.Comment.CommentBuilder;
-import me.ryubato.web.BoardForm;
-import me.ryubato.web.BoardForm.BoardFormBuilder;
-import me.ryubato.web.CommentForm;
-import me.ryubato.web.CommentForm.CommentFormBuilder;
+import me.ryubato.domain.Post;
+import me.ryubato.web.PostForm;
 
 public class Fixtures {
 
-    public static BoardBuilder aBoard() {
+    public static Board.BoardBuilder aBoard() {
         return Board.builder()
-                .title("테스트")
-                .content("안녕하세요.")
-                .writer("admin");
+                .name("자유게시판");
     }
 
-    public static CommentBuilder aComment() {
+    public static Comment.CommentBuilder aComment() {
         return Comment.builder()
-                .content("감사합니다.")
-                .writer("guest");
+                .writer("손님")
+                .content("감사합니다.");
     }
 
-    public static BoardFormBuilder aBoardForm() {
-        return BoardForm.builder()
-                .title("테스트")
-                .content("안녕하세요.")
-                .writer("admin");
+    public static PostForm.PostFormBuilder aPostForm() {
+        return PostForm.builder()
+                .title("환영합니다.")
+                .writer("관리자")
+                .content("");
     }
 
-    public static CommentFormBuilder aCommentForm() {
-        return CommentForm.builder()
-                .content("감사합니다.")
-                .writer("guest");
+    public static Post.PostBuilder aPost() {
+        return Post.builder()
+                .title("환영합니다.")
+                .writer("관리자")
+                .content("");
     }
 }

@@ -2,12 +2,13 @@ package me.ryubato.domain;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
-@DataJpaTest
+@SpringBootTest
+@AutoConfigureTestDatabase
 class CommentRepositoryTest {
 
     @Autowired
@@ -15,9 +16,7 @@ class CommentRepositoryTest {
 
     @Test
     void findAll() {
-
         commentRepository.findAllByParent(Comment.builder().id(1L).build());
-
         commentRepository.findAllByParentUsingNativeQuery(1L);
     }
 

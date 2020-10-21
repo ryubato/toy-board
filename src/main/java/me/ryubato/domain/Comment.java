@@ -1,9 +1,7 @@
 package me.ryubato.domain;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import me.ryubato.config.BaseTimeEntity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -14,8 +12,9 @@ import static javax.persistence.FetchType.LAZY;
 @Entity
 @Table(name = "comments")
 @Getter
+@EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Comment {
+public class Comment extends BaseTimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id")
@@ -26,7 +25,7 @@ public class Comment {
     private String writer;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "PARENT_COMMENT_ID")
+    @JoinColumn(name = "parent_comment_id")
     private Comment parent;
 
     @OneToMany(mappedBy = "parent")
@@ -41,7 +40,7 @@ public class Comment {
         this.child = child;
     }
 
-    public static Comment createComment(String content, String writer, Comment parent) {
+    public static Comment create(String content, String writer, Comment parent) {
         return Comment.builder()
                 .content(content)
                 .writer(writer)

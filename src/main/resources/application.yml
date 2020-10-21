@@ -16,12 +16,35 @@ spring:
   profiles: local
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:tcp://localhost:1521/testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false
+    url: jdbc:h2:tcp://localhost:1521/board;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     username: sa
     password:
+#    data: classpath:sql/data.sql
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.MySQL57Dialect
+#        storage_engine: innodb
+#        format_sql: true
+
+---
+
+spring:
+  profiles: test
+  datasource:
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+    url: jdbc:tc:mysql:5.7.22://localhost:3306/test
+    dbcp2:
+      driver-class-name: com.mysql.jdbc.Driver
+      test-on-borrow: true
+      validation-query: SELECT 1
+      max-total: 1
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: 'create-drop'
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL57Dialect

@@ -1,8 +1,8 @@
-package me.ryubato.component;
+package me.ryubato.integration;
 
 import me.ryubato.Fixtures;
-import me.ryubato.domain.BoardRepository;
-import me.ryubato.web.BoardListDto;
+import me.ryubato.domain.PostRepository;
+import me.ryubato.web.PostListRspDto;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -30,33 +30,30 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @Testcontainers
 @ActiveProfiles("test")
 @TestInstance(Lifecycle.PER_CLASS)
-@SpringBootTest(properties = {"init-data=false"}, webEnvironment = RANDOM_PORT)
-public class BoardApiComponentTestWithTestContainer {
+@SpringBootTest(webEnvironment = RANDOM_PORT)
+public class PostApiComponentTestWithTestContainer {
 
-    private final Logger log = LoggerFactory.getLogger(BoardApiComponentTestWithTestContainer.class);
+    private final Logger log = LoggerFactory.getLogger(PostApiComponentTestWithTestContainer.class);
 
-    @Container
-    static MySQLContainer mysql = new MySQLContainer();
+    @Container static MySQLContainer mysql = new MySQLContainer();
 
-    @Autowired private BoardRepository boardRepository;
+    @Autowired private PostRepository postRepository;
     @Autowired private TestRestTemplate restTemplate;
     @LocalServerPort private String port;
 
     @BeforeAll
     void init() {
-
-        boardRepository.save(Fixtures.aBoard().build());
-        boardRepository.save(Fixtures.aBoard().build());
-
+        postRepository.save(Fixtures.aPost().build());
+        postRepository.save(Fixtures.aPost().build());
     }
 
     @Test
     void getBoardsTest() {
 
-        String baseUrl = "http://localhost:" + port + "/api/v1/boards";
+        String baseUrl = "http://localhost:" + port + "/api/v1/posts";
 
-        ResponseEntity<List<BoardListDto>> responseEntity =
-                restTemplate.exchange(baseUrl, HttpMethod.GET, null, new ParameterizedTypeReference<List<BoardListDto>>() {});
+        ResponseEntity<List<PostListRspDto>> responseEntity =
+                restTemplate.exchange(baseUrl, HttpMethod.GET, null, new ParameterizedTypeReference<List<PostListRspDto>>() {});
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody().size()).isEqualTo(2);

@@ -1,7 +1,9 @@
 package me.ryubato.web;
 
+import lombok.Data;
 import me.ryubato.domain.Post;
 
+@Data
 public class PostListRspDto {
     private Long id;
     private String title;

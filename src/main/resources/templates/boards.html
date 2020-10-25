@@ -30,10 +30,10 @@
         <tr th:each="post: ${posts}">
             <td th:text="${post.id}"></td>
             <td>
-                <a href="detail.html" th:href="@{'/api/v1/boards/' + ${post.id}}" th:text="${post.title}"></a>
+                <a href="detail.html" th:href="@{'/api/v1/posts/' + ${post.id}}" th:text="${post.title}"></a>
             </td>
             <td th:text="${post.writer}"></td>
-            <td th:text="${post.modifiedDate}"></td>
+            <td th:text="${post.lastModifiedDate}"></td>
         </tr>
         </tbody>
     </table>

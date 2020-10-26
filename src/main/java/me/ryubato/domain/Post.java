@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import me.ryubato.config.BaseTimeEntity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static lombok.AccessLevel.PROTECTED;
 
@@ -22,6 +24,12 @@ public class Post extends BaseTimeEntity {
     private Long id;
 
     @Column
+    private Long boardId;
+
+    @Column
+    private String category;
+
+    @Column
     private String title;
 
     @Column
@@ -31,15 +39,24 @@ public class Post extends BaseTimeEntity {
     private String content;
 
     @Column
-    private Long boardId;
+    private Integer thumbsUp;
+
+    @Column
+    private Integer viewCount;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<Comment> comments = new ArrayList<>();
 
     @Builder
-    public Post(Long id, String title, String writer, String content, Long boardId) {
+    public Post(Long id, Long boardId, String category, String title, String writer, String content, Integer thumbsUp, Integer viewCount) {
         this.id = id;
+        this.boardId = boardId;
+        this.category = category;
         this.title = title;
         this.writer = writer;
         this.content = content;
-        this.boardId = boardId;
+        this.thumbsUp = thumbsUp;
+        this.viewCount = viewCount;
     }
 
     public static Post create(String title, String writer, String content, Long boardId) {

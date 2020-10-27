@@ -5,6 +5,7 @@ import me.ryubato.board.service.PostService;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -14,7 +15,7 @@ public class PostRestController {
     private final PostService postService;
 
     @PostMapping("/api/v1/posts")
-    public Long save(@RequestBody PostForm postForm) {
+    public Long save(@RequestBody @Valid PostForm postForm) {
         return postService.save(postForm);
     }
 

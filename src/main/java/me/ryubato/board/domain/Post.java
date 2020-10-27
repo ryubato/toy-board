@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import me.ryubato.board.rest.PostForm;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ public class Post extends BaseTimeEntity {
     private String content;
 
     @Column
-    private Integer thumbsUp;
+    private Integer thumbsCount;
 
     @Column
     private Integer viewCount;
@@ -47,23 +48,26 @@ public class Post extends BaseTimeEntity {
     private List<Comment> comments = new ArrayList<>();
 
     @Builder
-    public Post(Long id, Long boardId, String category, String title, String writer, String content, Integer thumbsUp, Integer viewCount) {
+    public Post(Long id, Long boardId, String category, String title, String writer, String content, Integer thumbsCount, Integer viewCount) {
         this.id = id;
         this.boardId = boardId;
         this.category = category;
         this.title = title;
         this.writer = writer;
         this.content = content;
-        this.thumbsUp = thumbsUp;
+        this.thumbsCount = thumbsCount;
         this.viewCount = viewCount;
     }
 
-    public static Post create(String title, String writer, String content, Long boardId) {
+    public static Post create(PostForm postForm) {
         return Post.builder()
-                .title(title)
-                .writer(writer)
-                .content(content)
-                .boardId(boardId)
+                .boardId(postForm.getBoardId())
+                .category(postForm.getContent())
+                .title(postForm.getTitle())
+                .writer(postForm.getWriter())
+                .content(postForm.getContent())
+                .thumbsCount(0)
+                .viewCount(0)
                 .build();
     }
 

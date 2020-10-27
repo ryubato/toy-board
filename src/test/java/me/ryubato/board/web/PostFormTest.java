@@ -31,19 +31,19 @@ public class PostFormTest {
 
         PostForm postForm = Fixtures.aPostForm()
                 .title("123456789012345678901234567890")
-                .content("")
+                .content(null)
                 .build();
 
         Set<ConstraintViolation<PostForm>> constraintViolations = validator.validate(postForm);
 
         assertEquals(2, constraintViolations.size());
 
-        assertEquals("길이가 0에서 20 사이여야 합니다",
+        assertEquals("길이가 1에서 20 사이여야 합니다",
                 constraintViolations.stream()
                         .filter(c -> c.getPropertyPath().toString().equals("title"))
                         .findAny().orElse(null).getMessage());
 
-        assertEquals("공백일 수 없습니다",
+        assertEquals("비어 있을 수 없습니다",
                 constraintViolations.stream()
                         .filter(c -> c.getPropertyPath().toString().equals("content"))
                         .findAny().orElse(null).getMessage());

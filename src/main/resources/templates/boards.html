@@ -20,20 +20,25 @@
     <table class="table table-horizontal table-bordered" th:if="${posts.size() > 0}">
         <thead>
         <tr>
-            <th>#</th>
+            <th>등록시간</th>
+            <th>추천수</th>
+            <th>카테고리</th>
             <th>제목</th>
             <th>작성자</th>
-            <th>등록일</th>
+            <th>조회수</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="post: ${posts}">
-            <td th:text="${post.id}"></td>
-            <td>
-                <a href="detail.html" th:href="@{'/api/v1/posts/' + ${post.id}}" th:text="${post.title}"></a>
-            </td>
+<!-- TODO data.sql CURRENT_TIMESTAMP ISO ?? 확인 필요해보임 -->
+            <td th:if="${#temporals.format(#temporals.createNow(), 'yy-MM-dd')} == ${#temporals.format(post.modifiedTime, 'yy-MM-dd') }" th:text="${#temporals.format(post.modifiedTime, 'HH:mm')}"></td>
+            <td th:unless="${#temporals.format(#temporals.createNow(), 'yy-MM-dd')} == ${#temporals.format(post.modifiedTime, 'yy-MM-dd') }" th:text="${#temporals.format(post.modifiedTime, 'yy-MM-dd')}"></td>
+            <td th:text="${post.thumbsCount}"></td>
+            <td th:text="${post.category}"></td>
+            <td th:text="${post.title}"></td>
             <td th:text="${post.writer}"></td>
-            <td th:text="${post.lastModifiedDate}"></td>
+            <td th:text="${post.viewCount}"></td>
+<!--            <td><a href="detail.html" th:href="@{'/api/v1/posts/' + ${post.id}}" th:text="${post.title}"></a></td>-->
         </tr>
         </tbody>
     </table>

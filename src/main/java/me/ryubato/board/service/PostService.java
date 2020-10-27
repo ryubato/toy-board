@@ -23,7 +23,7 @@ public class PostService {
 
     @Transactional
     public Long save(PostForm postForm) {
-        Post post = Post.create(postForm.getTitle(), postForm.getWriter(), postForm.getContent(), postForm.getBoardId());
+        Post post = Post.create(postForm);
         return postRepository.save(post).getId();
     }
 

@@ -1,5 +1,7 @@
-package me.ryubato.domain;
+package me.ryubato.board;
 
+import me.ryubato.board.domain.Comment;
+import me.ryubato.board.domain.CommentRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;

@@ -1,23 +1,23 @@
-package me.ryubato.web;
+package me.ryubato.board.rest;
 
 import lombok.Data;
-import me.ryubato.domain.Post;
-
-import java.time.LocalDateTime;
+import lombok.NoArgsConstructor;
+import me.ryubato.board.domain.Post;
 
 @Data
-public class PostListRspDto {
+@NoArgsConstructor
+public class PostRspDto {
     private Long id;
     private String title;
     private String writer;
+    private String content;
     private Long boardId;
-    private LocalDateTime lastModifiedDate;
 
-    public PostListRspDto(Post post) {
+    public PostRspDto(Post post) {
         this.id = post.getId();
         this.title = post.getTitle();
         this.writer = post.getWriter();
+        this.content = post.getContent();
         this.boardId = post.getBoardId();
-        this.lastModifiedDate = post.getLastModifiedDate();
     }
 }

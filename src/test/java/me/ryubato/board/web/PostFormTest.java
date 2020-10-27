@@ -1,6 +1,7 @@
-package me.ryubato.web;
+package me.ryubato.board.web;
 
-import me.ryubato.Fixtures;
+import me.ryubato.board.Fixtures;
+import me.ryubato.board.rest.PostForm;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;

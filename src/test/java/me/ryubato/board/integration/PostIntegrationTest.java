@@ -1,6 +1,6 @@
-package me.ryubato.integration;
+package me.ryubato.board.integration;
 
-import me.ryubato.domain.Post;
+import me.ryubato.board.domain.Post;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,14 +1,14 @@
-package me.ryubato.web;
+package me.ryubato.board.web;
 
 import lombok.RequiredArgsConstructor;
-import me.ryubato.service.PostService;
+import me.ryubato.board.service.PostService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 @RequiredArgsConstructor
-public class ViewController {
+public class PostController {
 
     private final PostService postService;
 

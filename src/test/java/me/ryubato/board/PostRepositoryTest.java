@@ -1,5 +1,8 @@
-package me.ryubato.domain;
+package me.ryubato.board;
 
+import me.ryubato.board.domain.Board;
+import me.ryubato.board.domain.Post;
+import me.ryubato.board.domain.PostRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

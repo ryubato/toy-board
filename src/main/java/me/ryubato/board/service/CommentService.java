@@ -1,9 +1,9 @@
-package me.ryubato.service;
+package me.ryubato.board.service;
 
 import lombok.RequiredArgsConstructor;
-import me.ryubato.domain.Comment;
-import me.ryubato.domain.CommentRepository;
-import me.ryubato.web.CommentForm;
+import me.ryubato.board.domain.Comment;
+import me.ryubato.board.domain.CommentRepository;
+import me.ryubato.board.rest.CommentForm;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;

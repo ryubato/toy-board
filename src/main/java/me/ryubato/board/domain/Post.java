@@ -1,10 +1,9 @@
-package me.ryubato.domain;
+package me.ryubato.board.domain;
 
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import me.ryubato.config.BaseTimeEntity;
 
 import javax.persistence.*;
 import java.util.ArrayList;

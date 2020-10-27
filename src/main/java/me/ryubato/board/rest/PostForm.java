@@ -1,4 +1,4 @@
-package me.ryubato.web;
+package me.ryubato.board.rest;
 
 import lombok.Builder;
 import lombok.Data;

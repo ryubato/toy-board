@@ -1,8 +1,8 @@
-package me.ryubato.integration;
+package me.ryubato.board.integration;
 
-import me.ryubato.Fixtures;
-import me.ryubato.domain.PostRepository;
-import me.ryubato.web.PostListRspDto;
+import me.ryubato.board.Fixtures;
+import me.ryubato.board.domain.PostRepository;
+import me.ryubato.board.rest.PostListRspDto;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;

@@ -1,7 +1,7 @@
-package me.ryubato.web;
+package me.ryubato.board.rest;
 
 import lombok.RequiredArgsConstructor;
-import me.ryubato.service.PostService;
+import me.ryubato.board.service.PostService;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,12 +9,12 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-public class PostApiController {
+public class PostRestController {
 
     private final PostService postService;
 
     @PostMapping("/api/v1/posts")
-    public Long save(@RequestBody PostForm postForm) {  // TODO @Valid 적용
+    public Long save(@RequestBody PostForm postForm) {
         return postService.save(postForm);
     }
 

@@ -1,7 +1,6 @@
-package me.ryubato.domain;
+package me.ryubato.board.domain;
 
 import lombok.*;
-import me.ryubato.config.BaseTimeEntity;
 
 import javax.persistence.*;
 

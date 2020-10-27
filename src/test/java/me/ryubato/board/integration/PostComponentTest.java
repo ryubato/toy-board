@@ -1,11 +1,11 @@
-package me.ryubato.integration;
+package me.ryubato.board.integration;
 
-import me.ryubato.Fixtures;
-import me.ryubato.domain.Post;
-import me.ryubato.domain.PostRepository;
-import me.ryubato.web.PostListRspDto;
-import me.ryubato.web.PostForm;
-import me.ryubato.web.RestResponsePage;
+import me.ryubato.board.Fixtures;
+import me.ryubato.board.domain.Post;
+import me.ryubato.board.domain.PostRepository;
+import me.ryubato.board.rest.PostListRspDto;
+import me.ryubato.board.rest.PostForm;
+import me.ryubato.board.rest.RestResponsePage;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;

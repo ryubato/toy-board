@@ -1,12 +1,12 @@
-package me.ryubato.service;
+package me.ryubato.board.service;
 
 import lombok.RequiredArgsConstructor;
-import me.ryubato.domain.Post;
-import me.ryubato.domain.PostRepository;
-import me.ryubato.web.CustomRestResponsePage;
-import me.ryubato.web.PostForm;
-import me.ryubato.web.PostListRspDto;
-import me.ryubato.web.PostRspDto;
+import me.ryubato.board.domain.Post;
+import me.ryubato.board.domain.PostRepository;
+import me.ryubato.board.rest.CustomRestResponsePage;
+import me.ryubato.board.rest.PostForm;
+import me.ryubato.board.rest.PostListRspDto;
+import me.ryubato.board.rest.PostRspDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;

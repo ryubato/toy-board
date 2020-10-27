@@ -1,8 +1,8 @@
 package me.ryubato.sample;
 
-import me.ryubato.Fixtures;
-import me.ryubato.domain.Board;
-import me.ryubato.domain.BoardRepository;
+import me.ryubato.board.Fixtures;
+import me.ryubato.board.domain.Board;
+import me.ryubato.board.domain.BoardRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;

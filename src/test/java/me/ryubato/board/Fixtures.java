@@ -1,9 +1,9 @@
-package me.ryubato;
+package me.ryubato.board;
 
-import me.ryubato.domain.Board;
-import me.ryubato.domain.Comment;
-import me.ryubato.domain.Post;
-import me.ryubato.web.PostForm;
+import me.ryubato.board.domain.Board;
+import me.ryubato.board.domain.Comment;
+import me.ryubato.board.domain.Post;
+import me.ryubato.board.rest.PostForm;
 
 public class Fixtures {
 

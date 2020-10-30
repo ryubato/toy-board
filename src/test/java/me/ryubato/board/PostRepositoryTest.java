@@ -33,9 +33,6 @@ class PostRepositoryTest {
                 .content("없음").build();
         em.persist(post);
 
-        em.flush();
-        em.clear();
-
         //when
         List<Post> posts = postRepository.findByBoardId(board.getId());
 

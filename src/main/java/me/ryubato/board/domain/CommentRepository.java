@@ -1,6 +1,5 @@
 package me.ryubato.board.domain;
 
-import me.ryubato.board.domain.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

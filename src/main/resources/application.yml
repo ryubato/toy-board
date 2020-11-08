@@ -5,21 +5,13 @@ spring:
 ---
 
 spring:
-  profiles: default
-  thymeleaf:
-    mode: HTML
-    cache: false
-
----
-
-spring:
   profiles: local
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:tcp://localhost:1521/board;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    url: jdbc:h2:mem:board;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     username: sa
     password:
-#    data: classpath:sql/data.sql
+    data: classpath:sql/data.sql
   jpa:
     hibernate:
       ddl-auto: create-drop
@@ -28,6 +20,29 @@ spring:
 #        dialect: org.hibernate.dialect.MySQL57Dialect
 #        storage_engine: innodb
 #        format_sql: true
+  thymeleaf:
+    mode: HTML
+    cache: true
+  h2:
+    console:
+      enabled: true
+
+---
+
+spring:
+  profiles: dev
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:tcp://localhost:1521/board;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password:
+    data: classpath:sql/data.sql
+  jpa:
+    hibernate:
+      ddl-auto: update
+  thymeleaf:
+    mode: HTML
+    cache: false
 
 ---
 

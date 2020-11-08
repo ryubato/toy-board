@@ -64,8 +64,8 @@ class PostRestControllerTestWithWebMvcTest {
     @TestConfiguration
     static class MockMvcConfig {
         @Bean
-        MockMvcBuilderCustomizer uft8Config() {
-            return builder -> builder.addFilters(new CharacterEncodingFilter(StandardCharsets.UTF_8.name()))
+        MockMvcBuilderCustomizer utf8Config() {
+            return builder -> builder.addFilters(new CharacterEncodingFilter(StandardCharsets.UTF_8.name(), true))
                     .alwaysDo(print());
         }
     }

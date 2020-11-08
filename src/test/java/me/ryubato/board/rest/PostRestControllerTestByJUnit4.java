@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -31,7 +32,8 @@ public class PostRestControllerTestByJUnit4 {
     public static void setup() {
         postService = Mockito.mock(PostService.class);
         mockMvc = MockMvcBuilders.standaloneSetup(new PostRestController(postService))
-                .addFilter(new CharacterEncodingFilter(StandardCharsets.UTF_8.name()))
+                .addFilter(new CharacterEncodingFilter(StandardCharsets.UTF_8.name(), true))
+                .alwaysDo(print())
                 .build();
     }
 

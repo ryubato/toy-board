@@ -15,7 +15,6 @@ public class PostForm {
     private String title;
     @NotEmpty
     private String writer;
-    @NotEmpty
     private String content;
     private Long boardId;
 

@@ -42,7 +42,7 @@ dependencies {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
 
-	implementation platform('org.testcontainers:testcontainers-bom:1.14.3')
+	implementation platform('org.testcontainers:testcontainers-bom:1.15.0')
 	testImplementation 'org.testcontainers:junit-jupiter'
 	testImplementation 'org.testcontainers:mysql'
 }

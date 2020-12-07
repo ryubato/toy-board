@@ -4,6 +4,7 @@ import me.ryubato.board.Fixtures;
 import me.ryubato.board.domain.PostRepository;
 import me.ryubato.board.rest.PostListRspDto;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
@@ -21,12 +22,14 @@ import org.springframework.test.context.ActiveProfiles;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.utility.DockerImageName;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
+@Disabled
 @Testcontainers
 @ActiveProfiles("test")
 @TestInstance(Lifecycle.PER_CLASS)
@@ -35,10 +38,12 @@ public class PostApiComponentTestWithTestContainer {
 
     private final Logger log = LoggerFactory.getLogger(PostApiComponentTestWithTestContainer.class);
 
-    @Container static MySQLContainer mysql = new MySQLContainer();
+    @Container
+    private static final MySQLContainer MY_SQL_CONTAINER = new MySQLContainer(DockerImageName.parse("mysql:5.7.22"));
 
     @Autowired private PostRepository postRepository;
     @Autowired private TestRestTemplate restTemplate;
+
     @LocalServerPort private String port;
 
     @BeforeAll
